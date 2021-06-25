@@ -31,7 +31,7 @@ $ git push origin master
 
 - Create Pull Request so your TAs can check up your work.
 
-## The key helper: `spotify-web-api-node` npm package
+## The key helper: `spotify-web-api-node` npm packagenpm 
 
 Spotify is great for streaming music from the app, but they also have a [Web Service](https://en.wikipedia.org/wiki/Web_service) for us developers to play with.
 
