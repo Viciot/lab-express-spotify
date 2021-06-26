@@ -33,18 +33,68 @@ app.get('/', (req, res) => {
 
 
 
-app.get('/artist-search',(req, res)=>{       
-       spotifyApi
-   .searchArtists(req.query.artist)
+app.get('/artist-search', (req, res)=>{       
+  spotifyApi
+  .searchArtists(req.query.artist)
   .then(data => {
     console.log('The received data from the API: ' , data.body.artists.items);
-    res.render("artist-search-results", data.body.artists.items)
+    res.render("artist-search-results", {artistListArr: data.body.artists.items})
     // ----> 'HERE WHAT WE WANT TO DO AFTER RECEIVING THE DATA FROM THE API'
   })
-
-
   .catch(err => console.log('The error while searching artists occurred: ', err));
    
 })
     
+app.get('/albums/:id', (req, res) => {
+  spotifyApi
+  .getArtistAlbums(req.params.id)
+  .then((data) => {
+      console.log('The received data from the API: ', data.body);
+      res.render("albums", {albumsArr: data.body.items})
+  })
+  .catch(err => console.log('The error while searching albums occurred: ', err));
+
+})
+
+app.get('/album-tracks/:id', (req, res) => {
+  spotifyApi.getAlbumTracks(req.params.id)
+  .then((data) => {
+      console.log('album-tracks', data.body);
+      res.render("album-tracks", {albumsTracksArr: data.body.items})
+  })
+  .catch(err => console.log('The error while searching albums occurred: ', err));
+})
+
+
+
+
+
+
+/*
+app.get('/album-tracks/:id', (req, res) => {
+  let id = req.params.id;
+  spotifyApi
+  .getAlbumTracks(id)
+  .then((data) => {
+      console.log('The received data from the API: ', data.body.items);
+      res.render('album-tracks', {albumTracksArr: data.body.items})
+  })
+  .catch(err => console.log('The error while searching albums occurred: ', err));
+})
+*/
+/*
+app.get('/album-tracks/:id', (req, res) => {
+  let id = req.params.id
+spotifyApi.getAlbumTracks(id, { limit : 5, offset : 1 })
+  .then((data) => {
+    console.log(data.body);
+  }) 
+  .catch(err => 
+    console.log('Something went wrong!', err));
+  });
+*/
+
+
+
+
 app.listen(3000, () => console.log('My Spotify project running on port 3000 🎧 🥁 🎸 🔊'));
